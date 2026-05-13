@@ -1,0 +1,22 @@
+# Web server
+flask>=2.0
+
+# MTP sync (push + pull)
+pyusb>=1.2
+
+# Notebook decoding (KDF stroke vectors → PDF)
+lxml>=4.9
+Pillow>=10.0
+cairosvg>=2.7
+
+# PDF page extraction (built-in PDFs)
+pypdf>=4.0
+
+# Book reading (KFX/AZW3/EPUB → PDF for text-based books)
+weasyprint>=60.0
+# kfxlib pulls in lxml.html.soupparser when handling source-EPUB dictionaries,
+# which requires beautifulsoup4 at import time.
+beautifulsoup4>=4.12
+
+# Sideloaded PDF rendering (rasterizes PDFs page-by-page for inline reader)
+PyMuPDF>=1.23
